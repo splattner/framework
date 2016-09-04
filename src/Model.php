@@ -10,9 +10,11 @@ class Model {
 	public $fields;
 
 	protected $db;
+    protected $session;
 
 	public function __construct() {
 		$this->db = Application::getInstance("db");
+        $this->session = Application::getInstance("session");
 
 		$this->fields = array();
 
