@@ -2,7 +2,7 @@
 
   "name" : "splattner/framework",
   "version" : "1.0.0",
-  "type" : "project",
+  "type" : "library",
   "license": "MIT",
 
   "authors": [
