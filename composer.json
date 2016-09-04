@@ -1,7 +1,7 @@
 {
 
   "name" : "splattner/framework",
-  "version" : "1.0.2",
+  "version" : "1.0.3",
   "type" : "library",
   "license": "MIT",
 
@@ -13,16 +13,13 @@
     }
   ],
   "require": {
-    "nadar/aspsms": "1.0.1",
     "adodb/adodb-php": "^5.20",
-    "smarty/smarty": "^3.1",
-    "phpmailer/phpmailer": "^5.2"
+    "smarty/smarty": "^3.1"
   },
   "autoload": {
     "files": [
       "src/Application.php",
       "src/API.php",
-      "src/Helper.php",
       "src/Model.php",
       "src/Page.php",
       "src/Plugin.php",
