@@ -1,0 +1,2 @@
+[14-Mar-2010 12:57:21] PHP Warning:  mysql_pconnect() [<a href='function.mysql-pconnect'>function.mysql-pconnect</a>]: Access denied for user 'c6myvbc'@'localhost' (using password: YES) in /home/vbcl/public_html/myvbc/libs/adodb5/drivers/adodb-mysql.inc.php on line 382
+[18-Nov-2011 15:28:32] PHP Warning:  mysql_pconnect() [<a href='function.mysql-pconnect'>function.mysql-pconnect</a>]: Access denied for user 'vbcl_myvbc'@'localhost' (using password: YES) in /home/vbcl/public_html/myvbc/libs/adodb5/drivers/adodb-mysql.inc.php on line 382

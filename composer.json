@@ -25,7 +25,9 @@
       "src/Plugin.php",
       "src/PublicAPI.php",
       "src/Service.php",
-      "src/Session.php"
+      "src/Session.php",
+      "libs/phpgacl-3.3.7/gacl.class.php",
+      "libs/phpgacl-3.3.7/gacl_api.class.php"
 
     ]
   }
