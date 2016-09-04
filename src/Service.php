@@ -6,7 +6,7 @@
  * Time: 13:56
  */
 
-namespace sebastianplattner\framework;
+namespace splattner\framework;
 
 
 class Service

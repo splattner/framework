@@ -1,6 +1,6 @@
 <?php
 
-namespace sebastianplattner\framework;
+namespace splattner\framework;
 
 
 class Application {
@@ -114,6 +114,16 @@ class Application {
         // Store Config
         Application::$config = $config;
 
+
+        // Includes
+        require "libs/framework/Helper.php";
+        require "libs/framework/Page.php";
+        require "libs/framework/Session.php";
+        require "libs/framework/Model.php";
+        require "libs/framework/Plugin.php";
+        require "libs/framework/Service.php";
+        require "libs/framework/API.php";
+        require "libs/framework/PublicAPI.php";
 
         // Load Models;
         Application::loadModels();

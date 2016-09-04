@@ -1,6 +1,6 @@
 <?php
 
-namespace sebastianplattner\framework;
+namespace splattner\framework;
 
 
 class Session {

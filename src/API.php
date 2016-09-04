@@ -1,7 +1,7 @@
 <?php
 
 
-namespace sebastianplattner\framework;
+namespace splattner\framework;
 
 /**
  * Created by PhpStorm.
