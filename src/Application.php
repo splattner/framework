@@ -238,7 +238,7 @@ class Application {
 
                 }
 
-                $api = Application::getInstance("sebastianplattner\\framework\\API");
+                $api = Application::getInstance(__NAMESPACE__ . "\\API");
                 $api->call();
 
                 if ($basicAuth) {
