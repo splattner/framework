@@ -20,7 +20,7 @@ class API
      * @access public
      * @var mixed
      */
-    public $db;
+    public $pdo;
 
     /**
      * The Session object to manage all Session related stuff
@@ -38,7 +38,7 @@ class API
 
     public function __construct() {
 
-        $this->db = Application::getInstance("db");
+        $this->pdo = Application::getInstance("pdo");
         $this->session = Application::getInstance("session");
 
     }
