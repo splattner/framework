@@ -18,7 +18,7 @@ abstract class Plugin{
 	 * @access public
 	 * @var mixed
 	 */
-	public $db;
+	public $pdo;
 
 	/**
 	 * Page Object
@@ -66,7 +66,7 @@ abstract class Plugin{
 		$this->page = Application::getInstance("page");
 		$this->smarty = Application::getInstance("smarty");
 		$this->session = Application::getInstance("session");
-		$this->db = Application::getInstance("db");
+		$this->pdo = Application::getInstance("pdo");
 		$this->acl = Application::getInstance("acl");
 
 		$this->registerPlugin($registerAs);

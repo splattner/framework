@@ -17,7 +17,7 @@ class Service
      * @access protected
      * @var mixed
      */
-    protected $db;
+    protected $pdo;
 
     /**
      * The Session object to manage all Session related stuff
@@ -27,7 +27,7 @@ class Service
     protected $session;
 
     public function __construct() {
-        $this->db = Application::getInstance("db");
+        $this->pdo = Application::getInstance("pdo");
         $this->session = Application::getInstance("session");
     }
 

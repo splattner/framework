@@ -16,7 +16,7 @@ class PublicAPI
      * @access public
      * @var mixed
      */
-    public $db;
+    public $pdo;
 
 
     protected $method;
@@ -26,9 +26,7 @@ class PublicAPI
     {
         header('Content-type: application/json');
 
-        $this->db = Application::getInstance("db");
-        $this->db->setFetchMode(ADODB_FETCH_ASSOC);
-
+        $this->pdo = Application::getInstance("pdo");
         $this->method = $_SERVER['REQUEST_METHOD'];
     }
 

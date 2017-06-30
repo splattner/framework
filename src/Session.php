@@ -30,7 +30,7 @@ class Session {
 	 * @access private
 	 * @var mixed
 	 */
-	private $db;
+	private $pdo;
 
 	/**
 	 * Provides the PHPGACL Functions
@@ -64,7 +64,7 @@ class Session {
 			$this->currentPage = "index";
 		}
 		
-		$this->db = Application::getInstance("db");
+		$this->pdo = Application::getInstance("pdo");
 		$this->acl = Application::getInstance("acl");
 		
 		$this->initSession();
@@ -82,13 +82,13 @@ class Session {
 	 */
 	public function auth($email, $password) {
 		
-        $sql = $this->db->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
-        $rs = $this->db->execute($sql,array($email, $password));
+        $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
+        $rs = $sql->execute(array($email, $password));
 		
 		/**
 		 * Check if any record are available and if acl allowes to authenticate
 		 */
-		if($rs->recordCount() == 1 && $this->acl->acl_check('auth', 'login', 'user', $rs->fields["id"])) {
+		if($rs->rowCount() == 1 && $this->acl->acl_check('auth', 'login', 'user', $rs->fields["id"])) {
 			$this->uid = $rs->fields["id"];
 			$this->isAuth = true;
 			$this->updateSession($this->getSessionID());
@@ -120,9 +120,10 @@ class Session {
 	 * @param string $sid
 	 */
 	private function updateSession($sid) {
-		$record["uid"] = $this->uid;
-		$record["isAuth"] = $this->isAuth;
-		$this->db->AutoExecute("session", $record, "UPDATE", "id = '" . $sid . "'");
+
+		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ? WHERE email = ? AND password = MD5(?)");
+        $sql->execute(array($this->uid, $this->isAuth, $email, $password));
+
 	}
 
 	/**
@@ -136,23 +137,25 @@ class Session {
 	}
 	
 	private function clearSessions() {
-		$sql = "DELETE FROM session WHERE lastUpdate < NOW() - INTERVAL 30 MINUTE";
-		$this->db->Execute($sql);
+		$sql = $this->pdo->prepare("DELETE FROM session WHERE lastUpdate < NOW() - INTERVAL 30 MINUTE");
+		$sql->Execute();
 	}
 	
 	/**
 	 * Load the session from the DB, or if new, create a new Session
 	 */
 	private function loadSessionFromDB() {
-		$sql = "SELECT * FROM session WHERE id = '" . $this->getSessionID() . "'";
-		$record = $this->db->Execute($sql);
+		$sql = $this->pdo->prepare("SELECT * FROM session WHERE id = '" . $this->getSessionID() . "'");
+		$sql->execute();
 		
-		if ($record->RecordCount() > 0) {
-			$this->uid = $record->fields["uid"];
-			$this->isAuth = $record->fields["isAuth"];
+		if ($sql->rowCount() > 0) {
+			$res = $sql->fetch();
+
+			$this->uid = $res["uid"];
+			$this->isAuth = $res["isAuth"];
 			
-			$sql = "UPDATE session SET lastUpdate = NOW() WHERE id= '" . $this->getSessionID() ."'";
-			$this->db->Execute($sql);
+			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE id= '" . $this->getSessionID() ."'");
+			$sql->Execute();
 			
 		} else {
 			$this->addSessionToDB();
@@ -164,10 +167,10 @@ class Session {
 	 * Add current Session to db
 	 */
 	private function addSessionToDB() {
-		$record["id"] = $this->getSessionID();
-		$record["uid"] = 0;
-		
-		$this->db->autoExecute("session", $record, "INSERT");	
+
+		$sql = $this->pdo->Prepare("INSERT INTO session (id, uid) VALUES(?,?)");
+        $sql->execute(array($this->getSessionID(), 0));
+
 	}
 		/**
 	 * Get current Session

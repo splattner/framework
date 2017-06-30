@@ -9,11 +9,11 @@ class Model {
 	
 	public $fields;
 
-	protected $db;
+    protected $pdo;
     protected $session;
 
 	public function __construct() {
-		$this->db = Application::getInstance("db");
+        $this->pdo = Application::getInstance("pdo");
         $this->session = Application::getInstance("session");
 
 		$this->fields = array();
@@ -47,8 +47,8 @@ class Model {
 
         }
 
-        $sql = $this->db->Prepare($sql);
-		$this->db->Execute($sql, $values);
+        $sql = $this->pdo->Prepare($sql);
+		$sql->Execute($values);
 
 	}
 	
@@ -72,10 +72,10 @@ class Model {
 		$sql = substr($sql, 0, -2); // Remove last ","
 		$sql  .= ")";
 
-        $sql = $this->db->Prepare($sql);
-		$this->db->Execute($sql, $values);
+        $sql = $this->pdo->Prepare($sql);
+		$sql->Execute($values);
 		
-		return $this->db->Insert_ID();
+		return $this->pdo->lastInsertId();
 	}
 	
 	public function getRS($where = array(), $orderby = array(), $filter = array())
@@ -117,14 +117,16 @@ class Model {
             $sql = substr($sql, 0, -1); // Remove last AND
         }
 
-        $sql = $this->db->Prepare($sql);
+        $sql = $this->pdo->Prepare($sql);
 
 
         if (count($where) > 0) {
-            return $this->db->Execute($sql, $whereValues);
+            $sql->Execute($whereValues);
         } else {
-            return $this->db->Execute($sql);
+            $sql->Execute();
         }
+
+        return $sql;
 
 	}
 	
@@ -141,8 +143,8 @@ class Model {
 		}
 		$sql = substr($sql, 0, -3); // Remove last AND
 
-        $sql = $this->db->Prepare($sql);
-		$this->db->Execute($sql, $whereValues);
+        $sql = $this->pdo->Prepare($sql);
+		$sql->Execute($whereValues);
 	}
 	
 	public function __get($name) {
@@ -156,15 +158,13 @@ class Model {
 
 	public function api_get($id) {
 
-        $this->db->setFetchMode(ADODB_FETCH_ASSOC);
-
 		if($id > 0) {
 			$where = array($this->pk . " =" => $id);
 		} else {
 			$where = array();
 		}
 
-        echo json_encode($this->getRS($where)->getArray(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+        echo json_encode($this->getRS($where)->fetchAll(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
     }
     public function api_post($data) {
 
