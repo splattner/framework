@@ -2,8 +2,6 @@
 
 namespace splattner\framework;
 
-use sebastianplattner\myvbc\models\MNotification;
-
 
 abstract class Page {
 
