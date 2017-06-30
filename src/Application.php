@@ -129,7 +129,18 @@ class Application {
         $db = NewADOConnection($dsn);
         $db->debug = $config["system"]["debug"];
         $db->EXECUTE("set names 'utf8'");
-        Application::setInstance("db", $db);
+
+
+
+        /**
+         * PDO Initialization
+         */
+        $pdo = new \PDO(
+            "mysql:host=" .  $config["db"]["server"] . ";dbname=" . $config["db"]["database"], 
+            $config["db"]["username"], 
+            $config["db"]["password"]
+            );
+        Application::setInstance("pdo", $pdo);
 
         /**
          * Initialize the PHPGACL Object
