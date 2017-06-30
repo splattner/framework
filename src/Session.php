@@ -83,13 +83,14 @@ class Session {
 	public function auth($email, $password) {
 		
         $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
-        $rs = $sql->execute(array($email, $password));
+        $sql->execute(array($email, $password));
+        $rs = $sql->fetch();
 		
 		/**
 		 * Check if any record are available and if acl allowes to authenticate
 		 */
-		if($rs->rowCount() == 1 && $this->acl->acl_check('auth', 'login', 'user', $rs->fields["id"])) {
-			$this->uid = $rs->fields["id"];
+		if($sql->rowCount() == 1 && $this->acl->acl_check('auth', 'login', 'user', $rs["id"])) {
+			$this->uid = $rs["id"];
 			$this->isAuth = true;
 			$this->updateSession($this->getSessionID());
 			return true;
