@@ -122,8 +122,8 @@ class Session {
 	 */
 	private function updateSession($sid) {
 
-		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ? WHERE email = ? AND password = MD5(?)");
-        $sql->execute(array($this->uid, $this->isAuth, $email, $password));
+		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ? , lastUpdate = NOW() WHERE id = ?");
+        $sql->execute(array($this->uid, $this->isAuth, $sid));
 
 	}
 
