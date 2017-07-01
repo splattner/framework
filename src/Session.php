@@ -19,6 +19,13 @@ class Session {
 	 */
 	public $uid;
 
+		/**
+	 * Roles for current User
+	 * @access public
+	 * @var string
+	 */
+	public $role;
+
 	/**
 	 * Current User is authenticated
 	 * @access public
@@ -32,12 +39,6 @@ class Session {
 	 */
 	private $pdo;
 
-	/**
-	 * Provides the PHPGACL Functions
-	 * @access public
-	 * @var mixed
-	 */
-	private $acl;
 	
 	/**
 	 * Array to Share Values between the Sessions
@@ -65,7 +66,6 @@ class Session {
 		}
 		
 		$this->pdo = Application::getInstance("pdo");
-		$this->acl = Application::getInstance("acl");
 		
 		$this->initSession();
 		$this->loadSessionFromDB();
@@ -89,8 +89,9 @@ class Session {
 		/**
 		 * Check if any record are available and if acl allowes to authenticate
 		 */
-		if($sql->rowCount() == 1 && $this->acl->acl_check('auth', 'login', 'user', $rs["id"])) {
+		if($sql->rowCount() == 1) {
 			$this->uid = $rs["id"];
+			$this->role = $rs["role"];
 			$this->isAuth = true;
 			$this->updateSession($this->getSessionID());
 			return true;
