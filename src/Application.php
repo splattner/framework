@@ -143,23 +143,17 @@ class Application {
         $pdo->query("set names 'utf8'");
         Application::setInstance("pdo", $pdo);
 
-        /**
-         * Initialize the PHPGACL Object
-         */
-        $acl = new \gacl(array("db" => $db, "debug" => $db->debug));
-        Application::setInstance("acl", $acl);
-
 
         /**
          * Setup ACL
          */
         if ($config["system"]["acl"] == null) {
-            $acl2 = new \gburtini\ACL\ACL();
+            $acl = new \gburtini\ACL\ACL();
         } else {
-            $acl2 = $config["system"]["acl"];
+            $acl = $config["system"]["acl"];
         }
         
-        Application::setInstance("acl2", $acl2);
+        Application::setInstance("acl", $acl);
 
         /**
          * Initialize the Smarty Template Engine

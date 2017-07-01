@@ -84,7 +84,7 @@ class Session {
         $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
         $sql->execute(array($email, $password));
         $rs = $sql->fetch();
-		
+
 		/**
 		 * Check if any record are available and if acl allowes to authenticate
 		 */
@@ -122,10 +122,8 @@ class Session {
 	 * @param string $sid
 	 */
 	private function updateSession($sid) {
-
-		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ?, role = ? lastUpdate = NOW() WHERE id = ?");
+		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ?, role = ?,  lastUpdate = NOW() WHERE sid = ?");
         $sql->execute(array($this->uid, $this->isAuth, $this->role, $sid));
-
 	}
 
 	/**
@@ -148,7 +146,7 @@ class Session {
 	 * Load the session from the DB, or if new, create a new Session
 	 */
 	private function loadSessionFromDB() {
-		$sql = $this->pdo->prepare("SELECT * FROM session WHERE id = '" . $this->getSessionID() . "'");
+		$sql = $this->pdo->prepare("SELECT * FROM session WHERE sid = '" . $this->getSessionID() . "'");
 		$sql->execute();
 		
 		if ($sql->rowCount() > 0) {
@@ -158,7 +156,7 @@ class Session {
 			$this->isAuth = $res["isAuth"];
 			$this->role = $res["role"];
 			
-			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE id= '" . $this->getSessionID() ."'");
+			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE sid= '" . $this->getSessionID() ."'");
 			$sql->Execute();
 			
 		} else {
@@ -172,7 +170,7 @@ class Session {
 	 */
 	private function addSessionToDB() {
 
-		$sql = $this->pdo->Prepare("INSERT INTO session (id, uid) VALUES(?,?)");
+		$sql = $this->pdo->Prepare("INSERT INTO session (sid, uid) VALUES(?,?)");
         $sql->execute(array($this->getSessionID(), 0));
 
 	}

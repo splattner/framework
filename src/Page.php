@@ -32,7 +32,6 @@ abstract class Page {
 	 * @var mixed
 	 */
 	public $acl;
-	public $acl2;
 
 
 	/**
@@ -109,7 +108,6 @@ abstract class Page {
 		$this->pdo = Application::getInstance("pdo");
 		$this->session = Application::getInstance("session");
 		$this->acl = Application::getInstance("acl");
-		$this->acl2 = Application::getInstance("acl2");
 		$this->smarty = Application::getInstance("smarty");
 		
 		/**
@@ -136,6 +134,16 @@ abstract class Page {
 		 * Init Plugin Array
 		 */
 		$this->plugins = array();
+
+		/** 
+		 * Add Ressources to ACL
+		 */
+		foreach (get_class_methods(get_class($this)) as $method) {
+			if (strpos($method, 'Action') !== false) {
+    			$this->acl->addResource(str_replace("Action","",$method));
+			}
+			
+		}
 	}
 
 
@@ -165,7 +173,7 @@ abstract class Page {
 
         $actionFunction  = $this->action;
         while ($actionFunction != NULL) {
-            if(isset($this->noACL[$actionFunction]) || $this->acl->acl_check($this->pagename, $actionFunction, 'user', $this->session->uid)) {
+            if(isset($this->noACL[$actionFunction]) || $this->acl->isAllowed($this->session->role, $this->action, "view")) {
                 $actionFunction .= "Action";
                 $actionFunction = $this->$actionFunction();
             } else {
