@@ -1,7 +1,7 @@
 {
 
   "name" : "splattner/framework",
-  "version" : "1.0.7",
+  "version" : "1.1",
   "type" : "library",
   "license": "MIT",
   "description": "Simple PHP Framework used by splattner/myvbc",
@@ -15,15 +15,12 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "adodb/adodb-php": "^5.20",
     "smarty/smarty": "^3.1",
     "gburtini/acl": "^0.1.0"
 
   },
   "autoload": {
     "files": [
-      "libs/phpgacl-3.3.7/gacl.class.php",
-      "libs/phpgacl-3.3.7/gacl_api.class.php",
       "src/Application.php",
       "src/API.php",
       "src/Model.php",
