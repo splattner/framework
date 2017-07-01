@@ -113,7 +113,7 @@ class Session {
 	public function closeSession($sid) {
 		$this->uid = 0;
 		$this->isAuth = false;
-		$this->role = "guest"
+		$this->role = "guest";
 		$this->updateSession($sid);
 	}
 
@@ -136,7 +136,7 @@ class Session {
 		$this->setSessionID(session_id());
 		$this->uid = 0;
 		$this->isAuth = false;
-		$this->role = "guest"
+		$this->role = "guest";
 	}
 	
 	private function clearSessions() {
@@ -156,7 +156,7 @@ class Session {
 
 			$this->uid = $res["uid"];
 			$this->isAuth = $res["isAuth"];
-			$this->role = $res["role"]
+			$this->role = $res["role"];
 			
 			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE id= '" . $this->getSessionID() ."'");
 			$sql->Execute();
