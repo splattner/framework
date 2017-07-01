@@ -39,7 +39,6 @@ class Session {
 	 */
 	private $pdo;
 
-	
 	/**
 	 * Array to Share Values between the Sessions
 	 */
@@ -114,6 +113,7 @@ class Session {
 	public function closeSession($sid) {
 		$this->uid = 0;
 		$this->isAuth = false;
+		$this->role = "guest"
 		$this->updateSession($sid);
 	}
 
@@ -123,8 +123,8 @@ class Session {
 	 */
 	private function updateSession($sid) {
 
-		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ? , lastUpdate = NOW() WHERE id = ?");
-        $sql->execute(array($this->uid, $this->isAuth, $sid));
+		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ?, role = ? lastUpdate = NOW() WHERE id = ?");
+        $sql->execute(array($this->uid, $this->isAuth, $this->role, $sid));
 
 	}
 
@@ -136,6 +136,7 @@ class Session {
 		$this->setSessionID(session_id());
 		$this->uid = 0;
 		$this->isAuth = false;
+		$this->role = "guest"
 	}
 	
 	private function clearSessions() {
@@ -155,6 +156,7 @@ class Session {
 
 			$this->uid = $res["uid"];
 			$this->isAuth = $res["isAuth"];
+			$this->role = $res["role"]
 			
 			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE id= '" . $this->getSessionID() ."'");
 			$sql->Execute();
