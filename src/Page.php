@@ -32,6 +32,7 @@ abstract class Page {
 	 * @var mixed
 	 */
 	public $acl;
+	public $acl2;
 
 
 	/**
@@ -108,6 +109,7 @@ abstract class Page {
 		$this->pdo = Application::getInstance("pdo");
 		$this->session = Application::getInstance("session");
 		$this->acl = Application::getInstance("acl");
+		$this->acl2 = Application::getInstance("acl2");
 		$this->smarty = Application::getInstance("smarty");
 		
 		/**

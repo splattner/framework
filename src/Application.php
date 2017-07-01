@@ -149,6 +149,18 @@ class Application {
         $acl = new \gacl(array("db" => $db, "debug" => $db->debug));
         Application::setInstance("acl", $acl);
 
+
+        /**
+         * Setup ACL
+         */
+        if ($config["system"]["acl"] == null) {
+            $acl2 = new \gburtini\ACL\ACL();
+        } else {
+            $acl2 = $config["system"]["acl"];
+        }
+        
+        Application::setInstance("acl2", $acl2);
+
         /**
          * Initialize the Smarty Template Engine
          */

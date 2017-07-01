@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e1d9584c2ac4714bccba44fd5af2ba34",
-    "content-hash": "49d0f3d3464aa3bd5f6b4be900300d5e",
+    "hash": "2017cef92cea3ee7390678f58a80fcdb",
+    "content-hash": "0380affda5f3878b3b57c42f8816be66",
     "packages": [
         {
             "name": "adodb/adodb-php",
@@ -60,6 +60,53 @@
                 "php"
             ],
             "time": "2016-08-31 14:21:42"
+        },
+        {
+            "name": "gburtini/acl",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gburtini/PHP-ACL.git",
+                "reference": "1ee2591b0401dccd66cd97da1dee0f2c171a75cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gburtini/PHP-ACL/zipball/1ee2591b0401dccd66cd97da1dee0f2c171a75cd",
+                "reference": "1ee2591b0401dccd66cd97da1dee0f2c171a75cd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "gburtini\\ACL": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL"
+            ],
+            "authors": [
+                {
+                    "name": "Giuseppe Burtini",
+                    "email": "joe@truephp.com",
+                    "homepage": "http://giuseppeburtini.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dependency free, simple access control lists for PHP.",
+            "homepage": "http://github.com/gburtini/PHP-ACL",
+            "keywords": [
+                "access",
+                "access control",
+                "acl",
+                "login",
+                "security",
+                "user"
+            ],
+            "time": "2015-05-04 16:21:04"
         },
         {
             "name": "nadar/aspsms",
@@ -230,6 +277,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": []
 }
