@@ -140,6 +140,7 @@ class Application {
             $config["db"]["username"], 
             $config["db"]["password"]
             );
+        $pdo->query("set names 'utf8'");
         Application::setInstance("pdo", $pdo);
 
         /**
