@@ -4,8 +4,8 @@ namespace splattner\framework;
 
 
 class Application {
-	
-	static private $instances = array();
+    
+    static private $instances = array();
     static private $config;
 
 
@@ -109,7 +109,7 @@ class Application {
      *
      * @param $config
      */
-	static public function init($config) {
+    static public function init($config) {
 
         // Store Config
         Application::$config = $config;
@@ -117,19 +117,6 @@ class Application {
 
         // Load Models;
         Application::loadModels();
-
-        /**
-         * Initialize the Database Connection
-         */
-        $dsn = "mysqli://"
-            . $config["db"]["username"] . ":"
-            . $config["db"]["password"] . "@"
-            . $config["db"]["server"] . "/"
-            . $config["db"]["database"];
-        $db = NewADOConnection($dsn);
-        $db->debug = $config["system"]["debug"];
-        $db->EXECUTE("set names 'utf8'");
-
 
 
         /**
@@ -190,55 +177,55 @@ class Application {
      * @param $className
      * @return mixed
      */
-	static public function getInstance($className) {
-		if (!isset(self::$instances[$className])) {
-			self::$instances[$className] = new $className();
-		}
-		return self::$instances[$className];
-	}
+    static public function getInstance($className) {
+        if (!isset(self::$instances[$className])) {
+            self::$instances[$className] = new $className();
+        }
+        return self::$instances[$className];
+    }
 
 
-	static public function setInstance($className, $object){
-		self::$instances[$className] = $object;
-	}
+    static public function setInstance($className, $object){
+        self::$instances[$className] = $object;
+    }
 
 
     /**
      * Create the application page class
      */
-	static public function createPage() {
-		$session = Application::getInstance("session");
+    static public function createPage() {
+        $session = Application::getInstance("session");
         $config = Application::getConfig();
 
         if (isset($config["system"]["customPageClass"])) {
             require $config["system"]["pages-folder"] . "/" . $config["system"]["customPageClass"] . ".php";
         }
-		
-		include_once $config["system"]["pages-folder"] . "/" . $session->currentPage . ".page.php";
-		$pageClass = $config["system"]["namespace"] . "\\pages\\Page" . ucfirst($session->currentPage);
+        
+        include_once $config["system"]["pages-folder"] . "/" . $session->currentPage . ".page.php";
+        $pageClass = $config["system"]["namespace"] . "\\pages\\Page" . ucfirst($session->currentPage);
 
 
-		$page =  new $pageClass();
+        $page =  new $pageClass();
 
-		Application::setInstance("page", $page);
-	}
+        Application::setInstance("page", $page);
+    }
 
     /**
      * Run the Application
      * Check if this is an API call or a Page call
      */
-	static public function run() {
+    static public function run() {
 
         $session = Application::getInstance("session");
 
-		/**
-		 * Check if this is an API Call
-		 */
-		$request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
-		$isAPICall = ($request[0] == "api");
+        /**
+         * Check if this is an API Call
+         */
+        $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+        $isAPICall = ($request[0] == "api");
         $basicAuth = false;
 
-		if ($isAPICall) {
+        if ($isAPICall) {
 
             if ($session->isAuth || isset($_SERVER['PHP_AUTH_USER'])) {
 
@@ -251,7 +238,7 @@ class Application {
 
                     if (!$session->auth($email, $password)) {
                         http_response_code(401);
-						return;
+                        return;
                     }
 
                 }
@@ -267,23 +254,23 @@ class Application {
                 return;
             }
 
-		} else {
-			$page = Application::getInstance("page");
+        } else {
+            $page = Application::getInstance("page");
 
-			$page->init();
-			$page->work();
-			$page->render();
+            $page->init();
+            $page->work();
+            $page->render();
 
-		}
+        }
 
 
-	}
-	
-	static public function finish() {
-		$session = Application::getInstance("session");
-		
-		unset($session);
-	}
-	
+    }
+    
+    static public function finish() {
+        $session = Application::getInstance("session");
+        
+        unset($session);
+    }
+    
 }
 ?>
