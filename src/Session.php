@@ -90,7 +90,11 @@ class Session {
 		 */
 		if($sql->rowCount() == 1) {
 			$this->uid = $rs["id"];
-			$this->role = $rs["role"];
+			if ($rs["role"] != "") {
+				$this->role = $rs["role"];
+			} else {
+				$this->role = "guest";
+			}
 			$this->isAuth = true;
 			$this->updateSession($this->getSessionID());
 			return true;
