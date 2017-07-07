@@ -158,7 +158,12 @@ class Session {
 
 			$this->uid = $res["uid"];
 			$this->isAuth = $res["isAuth"];
-			$this->role = $res["role"];
+			if ($res["role"] != "") {
+				$this->role = $res["role"];
+			} else {
+				$this->role = "guest";
+			}
+			
 			
 			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE sid= '" . $this->getSessionID() ."'");
 			$sql->Execute();
