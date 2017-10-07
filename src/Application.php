@@ -32,7 +32,7 @@ class Application {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
                     require $config["system"]["service-folder"] . "/" . $entry;
-                    $className = $config["system"]["namespace"] . "\\service\\" . basename($entry,".php");
+                    $className = $config["system"]["namespace"] . "\\services\\" . basename($entry,".php");
                     $testClass = new \ReflectionClass($className);
                     if (!$testClass->isAbstract()) {
                         Application::$services[basename($entry,".php")] = new $className();
