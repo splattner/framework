@@ -10,12 +10,12 @@ class Request {
 
 	public function __construct() {
 
-		for ($key => $value in $_POST) {
+		foreach($_POST as $key => $value) {
 
 			$this->postVars[$key] = $value;
 		}
 
-		for ($key => $value in $_GET) {
+		foreach($_GET as $key => $value) {
 
 			$this->getVars[$key] = $value;
 		}
