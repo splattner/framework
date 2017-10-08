@@ -29,7 +29,6 @@
       "src/PublicAPI.php",
       "src/Service.php",
       "src/Session.php",
-      "src/Request.php"
 
     ]
   }
