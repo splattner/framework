@@ -122,7 +122,14 @@ class Application {
         /**
          * PDO Initialization
          */
-        $pdo = new \PDO($config["db"]["url"], $config["db"]["username"], $config["db"]["password"]);
+
+        try {
+            $pdo = new \PDO($config["db"]["url"], $config["db"]["username"], $config["db"]["password"]);
+        } catch (\PDOException $e) {
+            die("Connection to DB failed. Please check your DB Configuration");
+        }
+
+        
         $pdo->query("set names 'utf8'");
         Application::setInstance("pdo", $pdo);
 
