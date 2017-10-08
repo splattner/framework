@@ -28,7 +28,8 @@
       "src/Plugin.php",
       "src/PublicAPI.php",
       "src/Service.php",
-      "src/Session.php"
+      "src/Session.php",
+      "src/Request.php"
 
     ]
   }

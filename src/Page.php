@@ -155,7 +155,7 @@ abstract class Page {
 
 
 	/**
-	 * Additional init Funktions can be placed here
+	 * Additional init Functions can be placed here
 	 */
 	public function init() {}
 	
