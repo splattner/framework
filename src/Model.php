@@ -11,14 +11,16 @@ class Model {
 
     protected $pdo;
     protected $session;
+    protected $config;
 
-	public function __construct() {
+    public function __construct() {
         $this->pdo = Application::getInstance("pdo");
         $this->session = Application::getInstance("session");
+        $this->config = Application::getConfig();
 
-		$this->fields = array();
+        $this->fields = array();
 
-	}
+    }
 
 	public function update($where) {
 		

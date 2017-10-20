@@ -1,10 +1,10 @@
 {
-
   "name" : "splattner/framework",
-  "version" : "1.1.2",
+  "version" : "1.1.3",
   "type" : "library",
   "license": "MIT",
   "description": "Simple PHP Framework used by splattner/myvbc",
+  "homepage": "https://github.com/splattner/framework",
 
   "authors": [
     {
@@ -28,8 +28,7 @@
       "src/Plugin.php",
       "src/PublicAPI.php",
       "src/Service.php",
-      "src/Session.php",
-
+      "src/Session.php"
     ]
   }
 }
