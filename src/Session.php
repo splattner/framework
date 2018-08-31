@@ -150,7 +150,7 @@ class Session {
 	 * Load the session from the DB, or if new, create a new Session
 	 */
 	private function loadSessionFromDB() {
-		$sql = $this->pdo->prepare("SELECT * FROM session WHERE sid = '" . $this->getSessionID() . "'");
+		$sql = $this->pdo->prepare("SELECT * FROM session WHERE `sid` = '" . $this->getSessionID() . "'");
 		$sql->execute();
 
 		if ($sql->rowCount() > 0) {
