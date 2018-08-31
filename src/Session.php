@@ -43,7 +43,7 @@ class Session {
 	 * Array to Share Values between the Sessions
 	 */
 	public $share;
-	
+
 	/**
 	 * The current page called by GET
 	 */
@@ -57,19 +57,19 @@ class Session {
 	public function __construct() {
 
 		$this->loadShare();
-		
+
 		if(isset($_GET["page"])) {
 			$this->currentPage = strtolower($_GET["page"]);
 		} else {
 			$this->currentPage = "index";
 		}
-		
+
 		$this->pdo = Application::getInstance("pdo");
-		
+
 		$this->initSession();
 		$this->loadSessionFromDB();
 	}
-	
+
 	public function __destruct() {
 		$this->saveShare();
 	}
@@ -80,7 +80,7 @@ class Session {
 	 * @return boolean successfull or not
 	 */
 	public function auth($email, $password) {
-		
+
         $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
         $sql->execute(array($email, $password));
         $rs = $sql->fetch();
@@ -102,7 +102,7 @@ class Session {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Wrapper for closeSession to Close my own Session
 	 */
@@ -140,19 +140,19 @@ class Session {
 		$this->isAuth = false;
 		$this->role = "guest";
 	}
-	
+
 	private function clearSessions() {
 		$sql = $this->pdo->prepare("DELETE FROM session WHERE lastUpdate < NOW() - INTERVAL 30 MINUTE");
 		$sql->Execute();
 	}
-	
+
 	/**
 	 * Load the session from the DB, or if new, create a new Session
 	 */
 	private function loadSessionFromDB() {
 		$sql = $this->pdo->prepare("SELECT * FROM session WHERE sid = '" . $this->getSessionID() . "'");
 		$sql->execute();
-		
+
 		if ($sql->rowCount() > 0) {
 			$res = $sql->fetch();
 
@@ -163,11 +163,11 @@ class Session {
 			} else {
 				$this->role = "guest";
 			}
-			
-			
-			$sql = $this->pdo->prepare("UPDATE session SET lastUpdate = NOW() WHERE sid= '" . $this->getSessionID() ."'");
+
+
+			$sql = $this->pdo->prepare("UPDATE `session` SET lastUpdate = NOW() WHERE `sid` = '" . $this->getSessionID() ."'");
 			$sql->Execute();
-			
+
 		} else {
 			$this->addSessionToDB();
 			$this->loadSessionFromDB();
@@ -198,21 +198,21 @@ class Session {
 	public function setSessionID($sid) {
 		$this->sid = $sid;
 	}
-	
+
 	/**
 	 * Load all vars in $this->share into the session
 	 */
 	public function saveShare() {
 		$_SESSION["share"] = $this->share;
 	}
-	
+
 	/**
 	 * Load all share vars into $this->share
 	 */
 	public function loadShare() {
 		$this->share = $_SESSION["share"];
 	}
-	
-	
+
+
 }
 ?>
