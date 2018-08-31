@@ -81,9 +81,9 @@ class Session {
 	 */
 	public function auth($email, $password) {
 
-        $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
-        $sql->execute(array($email, $password));
-        $rs = $sql->fetch();
+    $sql = $this->pdo->Prepare("SELECT * FROM persons WHERE email = ? AND password = MD5(?)");
+    $sql->execute(array($email, $password));
+    $rs = $sql->fetch();
 
 		/**
 		 * Check if any record are available and if acl allowes to authenticate
@@ -127,7 +127,7 @@ class Session {
 	 */
 	private function updateSession($sid) {
 		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ?, role = ?,  lastUpdate = NOW() WHERE sid = ?");
-        $sql->execute(array($this->uid, $this->isAuth, $this->role, $sid));
+    $sql->execute(array($this->uid, $this->isAuth, $this->role, $sid));
 	}
 
 	/**
@@ -179,7 +179,7 @@ class Session {
 	 */
 	private function addSessionToDB() {
 
-		$sql = $this->pdo->Prepare("INSERT INTO session (sid, uid) VALUES(?,?)");
+		$sql = $this->pdo->Prepare("INSERT INTO session (sid, uid, isAuth, role) VALUES(?,?,0,'guest')");
         $sql->execute(array($this->getSessionID(), 0));
 
 	}
