@@ -126,7 +126,7 @@ class Session {
 	 * @param string $sid
 	 */
 	private function updateSession($sid) {
-		$sql = $this->pdo->Prepare("UPDATE session SET uid = ?, isAuth = ?, role = '?,  lastUpdate = NOW() WHERE `sid` = '?'");
+		$sql = $this->pdo->Prepare("UPDATE `session` SET uid = ?, isAuth = ?, role = ?,  lastUpdate = NOW() WHERE `sid` = ?");
 
 		$sql->bindParam(1, $this->uid, \PDO::PARAM_INT);
 		$sql->bindParam(2, $this->isAuth, \PDO::PARAM_INT);
