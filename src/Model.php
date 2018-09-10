@@ -3,10 +3,10 @@
 namespace splattner\framework;
 
 class Model {
-	
+
 	public $table;
     public $pk = "id";
-	
+
 	public $fields;
 
     protected $pdo;
@@ -23,7 +23,7 @@ class Model {
     }
 
 	public function update($where) {
-		
+
 		$sql = "UPDATE `" . $this->table . "` SET ";
         $values = array();
 
@@ -40,7 +40,7 @@ class Model {
         foreach($where as $key => $value)
         {
             $i++;
-            $sql .= $key . " = ?";
+            $sql .= "`" + $key . "` = ?";
             $values[] =  $value;
 
             if(count($where) > 1 && $i < count($where)) {
@@ -53,19 +53,19 @@ class Model {
 		$sql->Execute($values);
 
 	}
-	
+
 	public function insert() {
-		
+
 		$sql = "INSERT INTO `" . $this->table . "` (";
         $values = array();
-		
+
 		foreach($this->fields as $key => $value)
 		{
-			$sql .= $key . ", ";
+			$sql .= "`" . $key . "`, ";
 		}
 		$sql = substr($sql, 0, -2); // Remove last ","
 		$sql .= ") VALUES (";
-		
+
 		foreach($this->fields as $key => $value)
 		{
 			$sql .= "? , ";
@@ -76,10 +76,10 @@ class Model {
 
         $sql = $this->pdo->Prepare($sql);
 		$sql->Execute($values);
-		
+
 		return $this->pdo->lastInsertId();
 	}
-	
+
 	public function getRS($where = array(), $orderby = array(), $filter = array())
     {
 
@@ -131,7 +131,7 @@ class Model {
         return $sql;
 
 	}
-	
+
 	public function delete($where) {
 
 		$whereValues = array();
@@ -140,7 +140,7 @@ class Model {
 
 		foreach($where as $key => $value)
 		{
-			$sql .= " " . $key . " = ? AND";
+			$sql .= " `" . $key . "` = ? AND";
 			$whereValues[] =  $value;
 		}
 		$sql = substr($sql, 0, -3); // Remove last AND
@@ -148,11 +148,11 @@ class Model {
         $sql = $this->pdo->Prepare($sql);
 		$sql->Execute($whereValues);
 	}
-	
+
 	public function __get($name) {
 		return $this->fields[$name];
 	}
-	
+
 	public function __set($name, $value) {
 		$this->fields[$name] = $value;
 	}

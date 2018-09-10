@@ -1,6 +1,6 @@
 {
   "name" : "splattner/framework",
-  "version" : "1.1.8",
+  "version" : "1.1.9",
   "type" : "library",
   "license": "MIT",
   "description": "Simple PHP Framework used by splattner/myvbc",
