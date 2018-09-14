@@ -40,7 +40,7 @@ class Model {
         foreach($where as $key => $value)
         {
             $i++;
-            $sql .= "`" + $key . "` = ?";
+            $sql .= "`" . $key . "` = ?";
             $values[] =  $value;
 
             if(count($where) > 1 && $i < count($where)) {
