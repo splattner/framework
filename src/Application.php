@@ -4,7 +4,7 @@ namespace splattner\framework;
 
 
 class Application {
-    
+
     static private $instances = array();
     static private $config;
 
@@ -126,10 +126,13 @@ class Application {
         try {
             $pdo = new \PDO($config["db"]["url"], $config["db"]["username"], $config["db"]["password"]);
         } catch (\PDOException $e) {
-            die("Connection to DB failed. Please check your DB Configuration");
+          header("HTTP/1.1 503 Service Temporarily Unavailable");
+          header("Status: 503 Service Temporarily Unavailable");
+          header("Retry-After: 3600");
+          die("Connection to DB failed. Please check your DB Configuration");        
         }
 
-        
+
         $pdo->query("set names 'utf8'");
         Application::setInstance("pdo", $pdo);
 
@@ -142,7 +145,7 @@ class Application {
         } else {
             $acl = $config["system"]["acl"];
         }
-        
+
         Application::setInstance("acl", $acl);
 
         /**
@@ -203,7 +206,7 @@ class Application {
         if (isset($config["system"]["customPageClass"])) {
             require $config["system"]["pages-folder"] . "/" . $config["system"]["customPageClass"] . ".php";
         }
-        
+
         include_once $config["system"]["pages-folder"] . "/" . $session->currentPage . ".page.php";
         $pageClass = $config["system"]["namespace"] . "\\pages\\Page" . ucfirst($session->currentPage);
 
@@ -268,12 +271,12 @@ class Application {
 
 
     }
-    
+
     static public function finish() {
         $session = Application::getInstance("session");
-        
+
         unset($session);
     }
-    
+
 }
 ?>
