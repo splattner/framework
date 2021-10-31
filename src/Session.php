@@ -216,7 +216,7 @@ class Session {
 	 * Load all share vars into $this->share
 	 */
 	public function loadShare() {
-		$this->share = $_SESSION["share"];
+		$this->share = array_key_exists("share", $_SESSION) ? $_SESSION["share"] : array();
 	}
 
 
