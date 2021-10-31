@@ -227,7 +227,7 @@ class Application {
         /**
          * Check if this is an API Call
          */
-        $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+        $request = explode('/', trim(array_key_exists("PATH_INFO",$_SERVER) ? $_SERVER["PATH_INFO"] : "",'/'));
         $isAPICall = ($request[0] == "api");
         $basicAuth = false;
 
