@@ -80,7 +80,7 @@ class Model {
 		return $this->pdo->lastInsertId();
 	}
 
-	public function getRS($where = array(), $orderby = array(), $filter = array())
+	public function getRS($where = array(), $orderby = array(), $filter = array(), $join = array())
     {
 
 
@@ -99,6 +99,11 @@ class Model {
 
 
         $sql .= " FROM `" . $this->table . "`";
+
+        if (count($join) > 0) {
+            foreach ($join as $value) {
+            $sql .= " " . $value;
+        }
 
         $whereValues = array();
 
