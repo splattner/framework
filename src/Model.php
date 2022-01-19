@@ -102,7 +102,8 @@ class Model {
 
         if (count($join) > 0) {
             foreach ($join as $value) {
-            $sql .= " " . $value;
+                $sql .= " " . $value;
+            }
         }
 
         $whereValues = array();
