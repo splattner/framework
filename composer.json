@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "smarty/smarty": "^3.1",
+    "smarty/smarty": "^4.0",
     "gburtini/acl": "^0.1.0"
 
   },
